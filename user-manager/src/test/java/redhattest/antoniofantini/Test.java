@@ -1,6 +1,7 @@
 package redhattest.antoniofantini;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -9,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 import redhattest.antoniofantini.exception.UserServiceException;
+import redhattest.antoniofantini.model.User;
 import redhattest.antoniofantini.persistence.UserDAO;
 import redhattest.antoniofantini.persistence.UserDAOFactory;
 import redhattest.antoniofantini.persistence.UserDAOTypes;
@@ -24,26 +26,38 @@ public class Test {
 		service = UserServiceInstance.getInstance();
 	}
 	
-
 	@org.junit.Test
-	public void testDao() {
+	public void test(){
+		try {
+			System.out.println("Testing User Service application...");
+			testDao();
+			testService();
+			List<User> users = service.getAllUsers();
+			User user = users.get(0);
+			User userTestObj = service.getUser(user.getEmail());
+			Assert.assertEquals(user.getUsername(), userTestObj.getUsername());
+			System.out.println("Tests ended successfully!!");
+		} catch (UserServiceException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void testDao() {
 		try {
 			System.out.println("Testing DAO...");
 			Assert.assertNotNull(dao);
 			Assert.assertNotNull(dao.getAllUsers());
-			System.out.println("Test successfull!!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	@org.junit.Test
-	public void testService() {
+	private void testService() {
 		try {
-			System.out.println("Testing service...");
+			System.out.println("Testing Service...");
 			Assert.assertNotNull(service);
 			Assert.assertNotNull(service.getAllUsers());
-			System.out.println("Test successfull!!");
 		} catch (UserServiceException e) {
 			e.printStackTrace();
 		}

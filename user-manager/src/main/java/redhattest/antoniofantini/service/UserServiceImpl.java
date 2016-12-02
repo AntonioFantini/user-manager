@@ -25,6 +25,14 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
+	@Override
+	public User getUser(String email) throws UserServiceException {
+		try {
+			return getDao().getUser(email);
+		}  catch (Exception e) {
+			throw new UserServiceException(e);
+		}
+	}
 	
 	private UserDAO getDao() throws IOException{
 		return UserDAOFactory.getInstance(UserDAOTypes.MOCK);

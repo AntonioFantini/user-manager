@@ -2,8 +2,11 @@ package redhattest.antoniofantini.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import redhattest.antoniofantini.utils.Utils;
 
 public class User implements Serializable {
 	private static final long serialVersionUID = 6007263432097924013L;
@@ -154,4 +157,46 @@ public class User implements Serializable {
 		this.picture = picture;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) return true;
+        if (!(o instanceof User)) {
+            return false;
+        }
+        User usr = (User) o;
+        return this.gender.equalsIgnoreCase(usr.getGender())
+        		&& this.name.equals(usr.getName())
+        		&& this.location.equals(usr.getLocation())
+        		&& this.email.equalsIgnoreCase(usr.getEmail())
+        		&& this.username.equalsIgnoreCase(usr.getUsername())
+        		&& this.password.equalsIgnoreCase(usr.getPassword())
+        		&& this.salt.equalsIgnoreCase(usr.getSalt())
+        		&& this.sha1.equalsIgnoreCase(usr.getSha1())
+        		&& this.sha256.equalsIgnoreCase(usr.getSha256())
+        		&& Utils.isSameDay(this.registered, usr.getRegistered())
+        		&& Utils.isSameDay(this.dob, usr.getDob())
+        		&& this.phone.equalsIgnoreCase(usr.getSalt())
+        		&& this.cell.equalsIgnoreCase(usr.getCell())
+        		&& this.pps.equalsIgnoreCase(usr.getPps())
+        		&& this.picture.equals(usr.picture);
+        
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.name, 
+							this.location, 
+							this.email, 
+							this.email,
+							this.username,
+			        		this.password,
+			        		this.salt,
+			        		this.sha1,
+			        		this.sha256,
+			        		this.registered,
+			        		this.dob, 
+			        		this.phone,
+			        		this.cell,
+			        		this.pps,
+			        		this.picture);
+	}
 }

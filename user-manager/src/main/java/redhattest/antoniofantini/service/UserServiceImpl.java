@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getAllUsers() throws UserServiceException {
 		try {
-			return getDao().getAllUsers();
+			return getDao().getAll();
 		} catch (Exception e) {
 			throw new UserServiceException(e);
 		}
@@ -44,5 +44,35 @@ public class UserServiceImpl implements UserService {
 
 	private UserDAO getDao() throws IOException {
 		return UserDAOFactory.getInstance(UserDAOTypes.MOCK);
+	}
+
+	@Override
+	public User update(User user) throws UserServiceException {
+		try {
+			return getDao().update(user);
+		} catch (Exception e) {
+			throw new UserServiceException(e);
+		}
+
+	}
+
+	@Override
+	public User create(User user) throws UserServiceException {
+		try {
+			return getDao().create(user);
+		} catch (Exception e) {
+			throw new UserServiceException(e);
+		}
+
+	}
+
+	@Override
+	public User createOrUpdate(User user) throws UserServiceException {
+		try {
+			return getDao().createOrUpdate(user);
+		} catch (Exception e) {
+			throw new UserServiceException(e);
+		}
+
 	}
 }

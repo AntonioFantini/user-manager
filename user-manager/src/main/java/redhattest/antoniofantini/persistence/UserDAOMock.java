@@ -22,7 +22,7 @@ public class UserDAOMock implements UserDAO {
 	}
 
 	@Override
-	public List<User> getAllUsers() {
+	public List<User> getAll() {
 		List<User> retval = new ArrayList<User>();
 		retval.addAll(userMap.values());
 		return retval;
@@ -41,7 +41,35 @@ public class UserDAOMock implements UserDAO {
 		}
 		return retval;	
 	}
-
+	@Override
+	public User update(User user) throws Exception {
+		if(null==user)
+			throw new IOException();
+		if(null == userMap.get(user.getEmail()))
+			throw new IOException();
+		userMap.put(user.getEmail(), user);
+		return userMap.get(user.getEmail());
+		
+	}
+	
+	@Override
+	public User create(User user) throws Exception {
+		if(null==user)
+			throw new IOException();
+		if(null != userMap.get(user.getEmail()))
+			throw new IOException();
+		userMap.put(user.getEmail(), user);
+		return userMap.get(user.getEmail());
+	}
+	
+	@Override
+	public User createOrUpdate(User user) throws Exception {
+		if(null==user)
+			throw new IOException();
+		userMap.put(user.getEmail(), user);
+		return userMap.get(user.getEmail());
+	}
+	
 	public void initRepo() throws IOException {
 		if (null == userMap) {
 			synchronized (UserDAOMock.class) {

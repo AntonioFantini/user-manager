@@ -62,7 +62,8 @@ public class Test {
 			newLoc.setZip("1234");
 			User userToUpdate = UserUtils.cloneUser(userUpdateTestCase);
 			userToUpdate.setLocation(newLoc);
-			//TODO Call service.update
+			User resultFromUpdate = service.update(userToUpdate);
+			Assert.assertEquals(userToUpdate, resultFromUpdate);
 			System.out.println("Tests ended successfully!!");
 
 		} catch (UserServiceException e) {
@@ -75,7 +76,7 @@ public class Test {
 		try {
 			System.out.println("Testing DAO...");
 			Assert.assertNotNull(dao);
-			Assert.assertNotNull(dao.getAllUsers());
+			Assert.assertNotNull(dao.getAll());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

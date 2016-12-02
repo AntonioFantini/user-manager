@@ -1,6 +1,7 @@
 package redhattest.antoniofantini.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Location implements Serializable{
 	private static final long serialVersionUID = 5971224156717070242L;
@@ -33,5 +34,21 @@ public class Location implements Serializable{
 		this.zip = zip;
 	}
 	
-	
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) return true;
+        if (!(o instanceof Location)) {
+            return false;
+        }
+        Location loc = (Location) o;
+        return this.street.equalsIgnoreCase(loc.getStreet())
+        		&& this.city.equalsIgnoreCase(loc.getCity())
+        		&& this.state.equalsIgnoreCase(loc.getState())
+        		&& this.zip.equalsIgnoreCase(loc.getState());
+        
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.street, this.city, this.state, this.zip);
+	}
 }

@@ -1,12 +1,12 @@
 package redhattest.antoniofantini;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 
 import redhattest.antoniofantini.exception.UserServiceException;
@@ -36,6 +36,18 @@ public class Test {
 			User user = users.get(0);
 			User userTestObj = service.getUser(user.getEmail());
 			Assert.assertEquals(user.getUsername(), userTestObj.getUsername());
+			
+			List<String> testUserEmails = new ArrayList<String>(10);
+			int i = 0;
+			while (i<10){
+				i++;
+				int pos = getRandomUserPosition(0, users.size()-1);
+				testUserEmails.add(users.get(pos).getEmail());
+			}
+			List<User> filteredUsers = service.getUsers(testUserEmails);
+			for (User usr : filteredUsers) {
+				Assert.assertTrue(testUserEmails.contains(usr.getEmail()));
+			}
 			System.out.println("Tests ended successfully!!");
 		} catch (UserServiceException e) {
 			e.printStackTrace();
@@ -63,9 +75,16 @@ public class Test {
 		}
 	}
 	
+	private int getRandomUserPosition(int minimum,int maximum){
+		Random rn = new Random();
+		int range = maximum - minimum + 1;
+		return rn.nextInt(range) + minimum;
+	}
+	
 	@AfterClass
 	public static void release() {
 		dao = null;
 		service = null;
 	}
+	
 }

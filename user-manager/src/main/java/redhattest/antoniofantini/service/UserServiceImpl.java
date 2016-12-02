@@ -9,8 +9,7 @@ import redhattest.antoniofantini.persistence.UserDAO;
 import redhattest.antoniofantini.persistence.UserDAOFactory;
 import redhattest.antoniofantini.persistence.UserDAOTypes;
 
-public class UserServiceImpl implements UserService{
-	
+public class UserServiceImpl implements UserService {
 
 	protected UserServiceImpl() {
 		super();
@@ -29,12 +28,21 @@ public class UserServiceImpl implements UserService{
 	public User getUser(String email) throws UserServiceException {
 		try {
 			return getDao().getUser(email);
-		}  catch (Exception e) {
+		} catch (Exception e) {
 			throw new UserServiceException(e);
 		}
 	}
-	
-	private UserDAO getDao() throws IOException{
+
+	public List<User> getUsers(List<String> userEmails) throws UserServiceException {
+		try {
+			return getDao().getUsers(userEmails);
+		} catch (Exception e) {
+			throw new UserServiceException(e);
+		}
+
+	}
+
+	private UserDAO getDao() throws IOException {
 		return UserDAOFactory.getInstance(UserDAOTypes.MOCK);
 	}
 }

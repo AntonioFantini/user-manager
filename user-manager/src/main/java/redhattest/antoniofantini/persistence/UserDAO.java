@@ -14,6 +14,7 @@ public interface UserDAO {
 
 	public List<User> getAllUsers() throws Exception;
 	public User getUser(String email) throws Exception;
+	public List<User> getUsers(List<String> userEmails) throws Exception;
 
 	/**Call this method in order to initialize DAO
 	 * @throws IOException

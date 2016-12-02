@@ -10,12 +10,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 
 import redhattest.antoniofantini.exception.UserServiceException;
+import redhattest.antoniofantini.model.Location;
 import redhattest.antoniofantini.model.User;
 import redhattest.antoniofantini.persistence.UserDAO;
 import redhattest.antoniofantini.persistence.UserDAOFactory;
 import redhattest.antoniofantini.persistence.UserDAOTypes;
 import redhattest.antoniofantini.service.UserService;
 import redhattest.antoniofantini.service.UserServiceInstance;
+import redhattest.antoniofantini.utils.UserUtils;
 
 public class Test {
 	private static UserDAO dao;
@@ -34,6 +36,7 @@ public class Test {
 			testService();
 			List<User> users = service.getAllUsers();
 			User user = users.get(0);
+			User userUpdateTest = null;
 			User userTestObj = service.getUser(user.getEmail());
 			Assert.assertEquals(user.getUsername(), userTestObj.getUsername());
 			
@@ -43,12 +46,23 @@ public class Test {
 				i++;
 				int pos = getRandomUserPosition(0, users.size()-1);
 				testUserEmails.add(users.get(pos).getEmail());
+				if(null == userUpdateTest){
+					userUpdateTest = users.get(pos);
+				}
 			}
 			List<User> filteredUsers = service.getUsers(testUserEmails);
 			for (User usr : filteredUsers) {
 				Assert.assertTrue(testUserEmails.contains(usr.getEmail()));
 			}
+			
+			Location loc = new Location();
+			loc.setCity("Fake City");
+			loc.setState("Fake State");
+			loc.setStreet("First street, 1");
+			loc.setZip("1234");
+//			User userToUpdate = UserUtils.cloneUser(userUpdateTest);
 			System.out.println("Tests ended successfully!!");
+
 		} catch (UserServiceException e) {
 			e.printStackTrace();
 		}

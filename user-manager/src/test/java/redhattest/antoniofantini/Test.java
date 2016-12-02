@@ -36,7 +36,7 @@ public class Test {
 			testService();
 			List<User> users = service.getAllUsers();
 			User user = users.get(0);
-			User userUpdateTest = null;
+			User userUpdateTestCase = null;
 			User userTestObj = service.getUser(user.getEmail());
 			Assert.assertEquals(user.getUsername(), userTestObj.getUsername());
 			
@@ -46,8 +46,8 @@ public class Test {
 				i++;
 				int pos = getRandomUserPosition(0, users.size()-1);
 				testUserEmails.add(users.get(pos).getEmail());
-				if(null == userUpdateTest){
-					userUpdateTest = users.get(pos);
+				if(null == userUpdateTestCase){
+					userUpdateTestCase = users.get(pos);
 				}
 			}
 			List<User> filteredUsers = service.getUsers(testUserEmails);
@@ -55,12 +55,14 @@ public class Test {
 				Assert.assertTrue(testUserEmails.contains(usr.getEmail()));
 			}
 			
-			Location loc = new Location();
-			loc.setCity("Fake City");
-			loc.setState("Fake State");
-			loc.setStreet("First street, 1");
-			loc.setZip("1234");
-//			User userToUpdate = UserUtils.cloneUser(userUpdateTest);
+			Location newLoc = new Location();
+			newLoc.setCity("Fake City");
+			newLoc.setState("Fake State");
+			newLoc.setStreet("First street, 1");
+			newLoc.setZip("1234");
+			User userToUpdate = UserUtils.cloneUser(userUpdateTestCase);
+			userToUpdate.setLocation(newLoc);
+			//TODO Call service.update
 			System.out.println("Tests ended successfully!!");
 
 		} catch (UserServiceException e) {

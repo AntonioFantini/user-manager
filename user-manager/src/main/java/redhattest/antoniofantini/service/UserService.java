@@ -18,4 +18,6 @@ public interface UserService {
 	public User create(User user) throws UserServiceException;
 
 	public User createOrUpdate(User user) throws UserServiceException;
+	
+	public boolean delete(User user) throws UserServiceException;
 }

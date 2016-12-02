@@ -12,15 +12,24 @@ import redhattest.antoniofantini.model.User;
 public interface UserDAO {
 
 	public List<User> getAll() throws Exception;
-	public User getUser(String email) throws Exception;
-	public List<User> getUsers(List<String> userEmails) throws Exception;
-	public User update(User user)  throws Exception;
-	public User create(User user)  throws Exception;
-	public User createOrUpdate(User user)  throws Exception;
 
-	/**Call this method in order to initialize DAO
+	public User getUser(String email) throws Exception;
+
+	public List<User> getUsers(List<String> userEmails) throws Exception;
+
+	public User update(User user) throws Exception;
+
+	public User create(User user) throws Exception;
+
+	public User createOrUpdate(User user) throws Exception;
+
+	public boolean delete(User user) throws Exception;
+
+	/**
+	 * Call this method in order to initialize DAO
+	 * 
 	 * @throws IOException
 	 */
-	public abstract void initRepo() throws IOException;
+	public void initRepo() throws IOException;
 
 }

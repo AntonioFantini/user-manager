@@ -11,6 +11,7 @@ import org.junit.BeforeClass;
 
 import redhattest.antoniofantini.exception.UserServiceException;
 import redhattest.antoniofantini.model.Location;
+import redhattest.antoniofantini.model.Name;
 import redhattest.antoniofantini.model.User;
 import redhattest.antoniofantini.persistence.UserDAO;
 import redhattest.antoniofantini.persistence.UserDAOFactory;
@@ -54,7 +55,7 @@ public class Test {
 			for (User usr : filteredUsers) {
 				Assert.assertTrue(testUserEmails.contains(usr.getEmail()));
 			}
-			
+			System.out.println("Testing update user...");
 			Location newLoc = new Location();
 			newLoc.setCity("Fake City");
 			newLoc.setState("Fake State");
@@ -64,8 +65,24 @@ public class Test {
 			userToUpdate.setLocation(newLoc);
 			User resultFromUpdate = service.update(userToUpdate);
 			Assert.assertEquals(userToUpdate, resultFromUpdate);
+			System.out.println("Testing create user...");
+			String newEmail = "newemail@example.com";
+			Name name = new Name();
+			name.setTitle("Mr.");
+			name.setFirst("NewFirstName");
+			name.setLast("NewLastName");
+			User newUser = UserUtils.cloneUser(resultFromUpdate);
+			newUser.setEmail(newEmail);
+			newUser.setName(name);
+			User createdUser = service.create(newUser);
+			Assert.assertNotNull(createdUser);
+			Assert.assertNotNull(service.getUser(createdUser.getEmail()));
+			System.out.println("Testing delete user...");
+			boolean delete = service.delete(createdUser);
+			Assert.assertNull(service.getUser(createdUser.getEmail()));
+			Assert.assertTrue(delete);
 			System.out.println("Tests ended successfully!!");
-
+			
 		} catch (UserServiceException e) {
 			e.printStackTrace();
 		}

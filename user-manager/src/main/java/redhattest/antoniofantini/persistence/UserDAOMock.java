@@ -53,6 +53,16 @@ public class UserDAOMock implements UserDAO {
 	}
 	
 	@Override
+	public boolean delete(User user) throws Exception {
+		if(null==user)
+			throw new IOException();
+		if(null==userMap.get(user.getEmail()))
+			return false;
+		userMap.remove(user.getEmail());
+		return true;
+	}
+	
+	@Override
 	public User create(User user) throws Exception {
 		if(null==user)
 			throw new IOException();

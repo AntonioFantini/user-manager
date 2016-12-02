@@ -75,4 +75,13 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
+	
+	@Override
+	public boolean delete(User user) throws UserServiceException {
+		try {
+			return getDao().delete(user);
+		} catch (Exception e) {
+			throw new UserServiceException(e);
+		}
+	}
 }

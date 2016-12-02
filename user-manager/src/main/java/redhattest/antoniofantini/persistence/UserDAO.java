@@ -2,33 +2,22 @@ package redhattest.antoniofantini.persistence;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import redhattest.antoniofantini.model.User;
 
-public abstract class UserDAO {
-	private static UserDAO dao;
+/**
+ * @author afantini
+ *
+ */
+public interface UserDAO {
 
-	public abstract HashMap<String, User> getAllUsers();
+	public List<User> getAllUsers() throws Exception;
+	public User getUser(String email) throws Exception;
 
+	/**Call this method in order to initialize DAO
+	 * @throws IOException
+	 */
 	public abstract void initRepo() throws IOException;
 
-	public static UserDAO getInstance(boolean mock) throws IOException {
-		if (null == dao) {
-			synchronized (UserDAO.class) {
-				if (null == dao) {
-					if (mock) {
-						dao = new UserDAOMock();
-						try {
-							dao.initRepo();
-						} catch (IOException e) {
-							throw e;
-						}
-					} else {
-						return null; // new UserDAOImpl(;
-					}
-				}
-			}
-		}
-		return dao;
-	}
 }
